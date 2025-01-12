@@ -2497,10 +2497,30 @@ bool DeclResultIdMapper::decorateResourceBindings() {
         spvBuilder.decorateDSetBinding(var.getSpirvInstr(), globalsSetNo,
                                        globalsBindNo);
       } else {
-        emitError(
-            "-fvk-bind-register requires register annotations on all resources",
-            var.getSourceLocation());
-        return false;
+        const std::optional<SpirvCodeGenOptions::BindingInfo> *heapBinding = nullptr;
+
+        if (var.getDeclaration()) {
+          const VarDecl *decl = dyn_cast<VarDecl>(var.getDeclaration());
+          if (decl) {
+            if (isResourceDescriptorHeap(decl->getType())) {
+              heapBinding = var.isCounter() ? &spirvOptions.counterHeapBinding
+                                            : &spirvOptions.resourceHeapBinding;
+            } else if (isSamplerDescriptorHeap(decl->getType())) {
+              heapBinding = &spirvOptions.samplerHeapBinding;
+            }
+          }
+        }
+
+        if (heapBinding && heapBinding->has_value()) {
+          spvBuilder.decorateDSetBinding(var.getSpirvInstr(),
+                                         heapBinding->value().set,
+                                         heapBinding->value().binding);
+        } else {
+          emitError("-fvk-bind-register requires register annotations on all "
+                    "resources",
+                    var.getSourceLocation());
+          return false;
+        }
       }
 
     return true;
