@@ -850,8 +850,8 @@ void SpirvEmitter::HandleTranslationUnit(ASTContext &context) {
     fileNames.clear();
     const auto &sm = context.getSourceManager();
     // Add each include file from preprocessor output
-    for (unsigned int i = 0; i < sm.getNumLineTableFilenames(); i++) {
-      llvm::StringRef file = sm.getLineTableFilename(i);
+    for (auto it = sm.fileinfo_begin(); it != sm.fileinfo_end(); ++it) {
+      llvm::StringRef file = it->first->getName();
       if (spirvOptions.debugInfoVulkan) {
         getOrCreateRichDebugInfoImpl(file);
       } else {
