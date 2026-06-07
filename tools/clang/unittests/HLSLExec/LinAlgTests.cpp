@@ -264,10 +264,10 @@ static VariantCompType makeExpectedMat(ComponentType CompType, MatrixDim M,
       case ComponentType::I32:
         VERIFY_IS_TRUE(StartingVal < static_cast<float>(
                                          std::numeric_limits<int32_t>::max()),
-                       "Value too large to cast to int32_t");
+                       L"Value too large to cast to int32_t");
         VERIFY_IS_TRUE(StartingVal > static_cast<float>(
                                          std::numeric_limits<int32_t>::min()),
-                       "Value too small to cast to int32_t");
+                       L"Value too small to cast to int32_t");
         Ints[Idx] = static_cast<int32_t>(StartingVal) +
                     static_cast<int32_t>(Increment ? Value : 0);
         break;
@@ -279,7 +279,7 @@ static VariantCompType makeExpectedMat(ComponentType CompType, MatrixDim M,
         break;
       }
       default:
-        VERIFY_IS_TRUE(false, "Unable to fill unexpected ComponentType");
+        VERIFY_IS_TRUE(false, L"Unable to fill unexpected ComponentType");
         break;
       }
     }
@@ -293,7 +293,7 @@ static VariantCompType makeExpectedMat(ComponentType CompType, MatrixDim M,
   case ComponentType::F16:
     return Halfs;
   default:
-    VERIFY_IS_TRUE(false, "Unable to fill unexpected ComponentType");
+    VERIFY_IS_TRUE(false, L"Unable to fill unexpected ComponentType");
     return Floats;
   }
 }
@@ -308,15 +308,15 @@ static VariantCompType makeExpectedVec(ComponentType CompType,
 class DxilConf_SM610_LinAlg {
 public:
   BEGIN_TEST_CLASS(DxilConf_SM610_LinAlg)
-  TEST_CLASS_PROPERTY("Kits.TestName",
-                      "D3D12 - Shader Model 6.10 - LinAlg Matrix Operations")
-  TEST_CLASS_PROPERTY("Kits.TestId", "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
+  TEST_CLASS_PROPERTY(L"Kits.TestName",
+                      L"D3D12 - Shader Model 6.10 - LinAlg Matrix Operations")
+  TEST_CLASS_PROPERTY(L"Kits.TestId", L"a1b2c3d4-e5f6-7890-abcd-ef1234567890")
   TEST_CLASS_PROPERTY(
-      "Kits.Description",
-      "Validates SM 6.10 linear algebra matrix operations execute correctly")
+      L"Kits.Description",
+      L"Validates SM 6.10 linear algebra matrix operations execute correctly")
   TEST_CLASS_PROPERTY(
-      "Kits.Specification",
-      "Device.Graphics.D3D12.DXILCore.ShaderModel610.CoreRequirement")
+      L"Kits.Specification",
+      L"Device.Graphics.D3D12.DXILCore.ShaderModel610.CoreRequirement")
   TEST_METHOD_PROPERTY(L"Priority", L"0")
   END_TEST_CLASS()
 
@@ -463,7 +463,7 @@ static void runLoadStoreDescriptor(ID3D12Device *Device,
                                         st::ShaderOp *) {
                     VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType,
                                                    NumElements),
-                                   "Saw unsupported component type");
+                                   L"Saw unsupported component type");
                   });
 
   MappedData OutData;
@@ -601,7 +601,7 @@ static void runAccumulateDescriptor(ID3D12Device *Device,
         VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType, NumElements,
                                        /*StartingVal=*/FillValue,
                                        /*Increment=*/false),
-                       "Saw unsupported component type");
+                       L"Saw unsupported component type");
       });
 
   MappedData OutData;
@@ -692,7 +692,7 @@ static void runElementAccess(ID3D12Device *Device,
                                         st::ShaderOp *) {
                     VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType,
                                                    NumElements),
-                                   "Saw unsupported component type");
+                                   L"Saw unsupported component type");
                   });
 
   MappedData OutData;
@@ -711,7 +711,7 @@ static void runElementAccess(ID3D12Device *Device,
   for (size_t I = 0; I < NumThreads; ++I)
     TotalLength += Lengths[I];
   VERIFY_IS_GREATER_THAN_OR_EQUAL(
-      TotalLength, NumElements, "Sum of all lengths must be gte num elements");
+      TotalLength, NumElements, L"Sum of all lengths must be gte num elements");
 }
 
 void DxilConf_SM610_LinAlg::ElementAccess_Wave_16x16_F16() {
@@ -783,7 +783,7 @@ static void runElementSet(ID3D12Device *Device,
                                         st::ShaderOp *) {
                     VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType,
                                                    NumElements),
-                                   "Saw unsupported component type");
+                                   L"Saw unsupported component type");
                   });
 
   MappedData OutData;
@@ -863,7 +863,7 @@ static void runCopyConvert(ID3D12Device *Device,
                                         st::ShaderOp *) {
                     VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType,
                                                    NumElements),
-                                   "Saw unsupported component type");
+                                   L"Saw unsupported component type");
                   });
 
   MappedData OutData;
@@ -1202,7 +1202,7 @@ static void runMatVecMul(ID3D12Device *Device,
         VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType, NumElements,
                                        /*StartingVal=*/FillValue,
                                        /*Increment=*/false),
-                       "Saw unsupported component type");
+                       L"Saw unsupported component type");
       });
 
   MappedData OutData;
@@ -1297,7 +1297,7 @@ static void runMatVecMulAdd(ID3D12Device *Device,
         VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType, NumElements,
                                        /*StartingVal=*/FillValue,
                                        /*Increment=*/false),
-                       "Saw unsupported component type");
+                       L"Saw unsupported component type");
       });
 
   MappedData OutData;
@@ -1503,7 +1503,7 @@ static void runLoadMemory(ID3D12Device *Device,
                                         st::ShaderOp *) {
                     VERIFY_IS_TRUE(fillInputBuffer(Name, Data, Params.CompType,
                                                    NumElements),
-                                   "Saw unsupported component type");
+                                   L"Saw unsupported component type");
                   });
 
   MappedData OutData;

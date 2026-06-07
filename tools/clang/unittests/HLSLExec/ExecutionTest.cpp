@@ -15,6 +15,9 @@
 
 // *** THIS FILE CANNOT TAKE ANY LLVM DEPENDENCIES  *** //
 
+#define INLINE_TEST_METHOD_MARKUP
+#include <WexTestClass.h>
+
 // clang-format off
 // Includes on Windows are highly order dependent.
 #include <algorithm>
@@ -192,7 +195,7 @@ public:
   TEST_CLASS_PROPERTY(L"Parallel", L"true")
   TEST_METHOD_PROPERTY(L"Priority", L"0")
   END_TEST_CLASS()
-  TEST_CLASS_SETUP(ExecutionTestClassSetup)
+  TEST_CLASS_SETUP(ExecutionTestClassSetup);
 
   TEST_METHOD(BasicComputeTest);
   TEST_METHOD(BasicTriangleTest);
@@ -204,7 +207,7 @@ public:
   TEST_METHOD(SaturateTest);
   TEST_METHOD(SignTest);
   TEST_METHOD(Int64Test);
-  TEST_METHOD(LifetimeIntrinsicTest)
+  TEST_METHOD(LifetimeIntrinsicTest);
   TEST_METHOD(WaveIntrinsicsTest);
   TEST_METHOD(WaveIntrinsicsDDITest);
   TEST_METHOD(WaveIntrinsicsInPSTest);
@@ -229,11 +232,11 @@ public:
   TEST_METHOD(AtomicsFloatTest);
   TEST_METHOD(HelperLaneTest);
   TEST_METHOD(HelperLaneTestWave);
-  TEST_METHOD(SignatureResourcesTest)
-  TEST_METHOD(DynamicResourcesTest)
-  TEST_METHOD(DynamicResourcesDynamicIndexingTest)
+  TEST_METHOD(SignatureResourcesTest);
+  TEST_METHOD(DynamicResourcesTest);
+  TEST_METHOD(DynamicResourcesDynamicIndexingTest);
 
-  TEST_METHOD(QuadReadTest)
+  TEST_METHOD(QuadReadTest);
   TEST_METHOD(QuadAnyAll);
 
   TEST_METHOD(CBufferTestHalf);
@@ -10361,10 +10364,10 @@ void RunWaveSizeTest(UINT minWaveSize, UINT maxWaveSize,
                      dxc::SpecificDllLoader &m_support) {
   // format shader source
   const char waveSizeTestShader[] =
-      R"(struct TestData { 
-        uint count; 
+      R"(struct TestData {
+        uint count;
       };
-      RWStructuredBuffer<TestData> data : register(u0); 
+      RWStructuredBuffer<TestData> data : register(u0);
 
       // Note: WAVESIZE will be defined via compiler option -D
       WAVE_SIZE_ATTR
@@ -10435,10 +10438,10 @@ void ExecuteWaveSizeRangeInstance(UINT minWaveSize, UINT maxWaveSize,
 
   // format shader source
   const char waveSizeTestShader[] =
-      R"(struct TestData { 
-        uint count; 
+      R"(struct TestData {
+        uint count;
       };
-      RWStructuredBuffer<TestData> data : register(u0); 
+      RWStructuredBuffer<TestData> data : register(u0);
 
       // Note: WAVE_SIZE_ATTR will be defined via compiler option -D
       WAVE_SIZE_ATTR
