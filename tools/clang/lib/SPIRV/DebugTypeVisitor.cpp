@@ -419,6 +419,7 @@ SpirvDebugType *DebugTypeVisitor::lowerToDebugType(const SpirvType *spirvType) {
         spvContext.getDebugTypeFunction(spirvType, flags, returnType, params);
     break;
   }
+  case SpirvType::TK_SpirvIntrinsicType:
   case SpirvType::TK_BufferEXT:
   case SpirvType::TK_UntypedPointerKHR: {
     // There is no standard debug type for opaque buffer/pointers yet.
